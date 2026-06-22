@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>My Schedule</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>My Schedule</h1>
+    <div class="tabs" role="tablist">
+      <button class="tab is-active" data-type="weekday" role="tab">平日</button>
+      <button class="tab" data-type="holiday" role="tab">休日</button>
+    </div>
+  </header>
+
+  <main>
+    <ul id="schedule" class="schedule"></ul>
+  </main>
+
+  <footer class="app-footer">
+    <button id="clearBtn" class="clear-btn" type="button">この表示をすべてクリア</button>
+    <p class="hint">枠をタップして予定を入力 / データはこの端末に保存されます</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
