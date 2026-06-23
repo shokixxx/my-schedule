@@ -64,6 +64,89 @@ main {
   padding: 8px 12px 0;
 }
 
+.bulk {
+  margin: 4px 0 12px;
+}
+
+.bulk-toggle {
+  width: 100%;
+  border: 1px dashed var(--accent);
+  background: var(--card);
+  color: var(--accent);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.bulk-form {
+  margin-top: 10px;
+  padding: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bulk-title {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 1rem;
+  min-height: 44px;
+}
+
+.bulk-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bulk-range select {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 8px;
+  font-size: 1rem;
+  background: #fff;
+  min-height: 44px;
+}
+
+.bulk-tilde {
+  color: var(--muted);
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.bulk-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.bulk-apply {
+  background: var(--accent);
+  color: #fff;
+}
+
+.bulk-clear {
+  background: var(--bg);
+  color: #b91c1c;
+  border: 1px solid var(--line);
+}
+
 .schedule {
   list-style: none;
   margin: 0;

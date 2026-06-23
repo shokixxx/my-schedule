@@ -13,10 +13,29 @@
     <div class="tabs" role="tablist">
       <button class="tab is-active" data-type="weekday" role="tab">平日</button>
       <button class="tab" data-type="holiday" role="tab">休日</button>
+      <button class="tab" data-type="drink" role="tab">飲み会</button>
     </div>
   </header>
 
   <main>
+    <section class="bulk">
+      <button id="bulkToggle" class="bulk-toggle" type="button" aria-expanded="false">
+        ＋ まとめて入力
+      </button>
+      <div id="bulkForm" class="bulk-form" hidden>
+        <input id="bulkTitle" class="bulk-title" type="text" placeholder="予定（例：勤務）" />
+        <div class="bulk-range">
+          <select id="bulkStart" aria-label="開始時刻"></select>
+          <span class="bulk-tilde">〜</span>
+          <select id="bulkEnd" aria-label="終了時刻"></select>
+        </div>
+        <div class="bulk-actions">
+          <button id="bulkApply" class="bulk-apply" type="button">この範囲に入力</button>
+          <button id="bulkClear" class="bulk-clear" type="button">この範囲を消去</button>
+        </div>
+      </div>
+    </section>
+
     <ul id="schedule" class="schedule"></ul>
   </main>
 
