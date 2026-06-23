@@ -15,8 +15,14 @@ const TYPE_LABELS = {
 
 let currentType = "weekday"; // "weekday" | "holiday" | "drink"
 
+// 睡眠時間の判定キーワード
+// 就寝側：「就寝 / 寝る / 睡眠 / ねる / sleep」（ただし「寝る準備」などの "準備" は除外）
+const SLEEP_RE = /就寝|寝る|睡眠|ねる|sleep/i;
+const WAKE_RE = /起床|起きる|おきる|wake/i;
+
 const scheduleEl = document.getElementById("schedule");
 const clearBtn = document.getElementById("clearBtn");
+const sleepSummary = document.getElementById("sleepSummary");
 const tabs = document.querySelectorAll(".tab");
 
 // まとめて入力フォーム
@@ -76,8 +82,57 @@ function toMin(hhmm) {
   return h * 60 + m;
 }
 
+function isSleep(title) {
+  return !!title && SLEEP_RE.test(title) && !title.includes("準備");
+}
+
+function isWake(title) {
+  return !!title && WAKE_RE.test(title);
+}
+
+// 分数 → 「7時間30分」形式
+function formatDuration(min) {
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m === 0 ? `${h}時間` : `${h}時間${m}分`;
+}
+
+// 「就寝」開始 → 「起床」までの睡眠時間を計算（深夜0時をまたいで計算）
+function computeSleep(data) {
+  const slots = timeSlots();
+  const sleepMins = slots.filter((t) => isSleep(data[t])).map(toMin);
+  if (sleepMins.length === 0) return null;
+
+  // 就寝時刻：昼(12:00)以降に就寝枠があればその最早、無ければ全体の最早
+  const pm = sleepMins.filter((m) => m >= 12 * 60);
+  const bedMin = pm.length ? Math.min(...pm) : Math.min(...sleepMins);
+
+  // 起床時刻：起床枠の最早。無ければ就寝枠の最後の終わりで代用
+  const wakeMins = slots.filter((t) => isWake(data[t])).map(toMin);
+  const wakeMin = wakeMins.length
+    ? Math.min(...wakeMins)
+    : Math.max(...sleepMins) + STEP_MIN;
+
+  // 0時をまたぐので 24時間(1440分)で正規化
+  const dur = (((wakeMin - bedMin) % 1440) + 1440) % 1440;
+  return { bedMin, wakeMin, dur };
+}
+
+function updateSleepSummary(data) {
+  const s = computeSleep(data);
+  if (!s) {
+    sleepSummary.innerHTML =
+      `😴 睡眠時間 —<br><span class="sleep-sub">「就寝」と「起床」を入力すると自動計算</span>`;
+    return;
+  }
+  sleepSummary.innerHTML =
+    `😴 睡眠時間 ${formatDuration(s.dur)}` +
+    `<br><span class="sleep-sub">${label(s.bedMin)} 就寝 → ${label(s.wakeMin)} 起床</span>`;
+}
+
 function render() {
   const data = loadData(currentType);
+  updateSleepSummary(data);
   scheduleEl.innerHTML = "";
 
   for (const time of timeSlots()) {

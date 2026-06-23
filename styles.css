@@ -36,6 +36,22 @@ html, body {
   text-align: center;
 }
 
+.sleep-summary {
+  margin: 0 0 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 9px 10px;
+}
+
+.sleep-summary .sleep-sub {
+  font-weight: 500;
+  opacity: 0.85;
+  font-size: 0.8rem;
+}
+
 .tabs {
   display: flex;
   gap: 8px;
