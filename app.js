@@ -9,11 +9,21 @@ const STORAGE_PREFIX = "my-schedule:v1:";
 
 const TYPE_LABELS = {
   weekday: "平日",
-  holiday: "休日",
+  saturday: "土曜",
+  sunday: "日曜",
+  outing: "おでかけ",
   drink: "飲み会",
 };
 
-let currentType = "weekday"; // "weekday" | "holiday" | "drink"
+let currentType = "weekday";
+
+// 旧「休日(holiday)」のデータを「土曜(saturday)」へ一度だけ引き継ぐ
+function migrateLegacy() {
+  const legacy = localStorage.getItem(STORAGE_PREFIX + "holiday");
+  if (legacy && localStorage.getItem(STORAGE_PREFIX + "saturday") === null) {
+    localStorage.setItem(STORAGE_PREFIX + "saturday", legacy);
+  }
+}
 
 // 睡眠時間の判定キーワード
 // 就寝側：「就寝 / 寝る / 睡眠 / ねる / sleep」（ただし「寝る準備」などの "準備" は除外）
@@ -226,5 +236,6 @@ bulkToggle.addEventListener("click", () => {
 bulkApply.addEventListener("click", () => applyRange(false));
 bulkClear.addEventListener("click", () => applyRange(true));
 
+migrateLegacy();
 buildRangeSelects();
 render();

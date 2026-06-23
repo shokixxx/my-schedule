@@ -54,18 +54,20 @@ html, body {
 
 .tabs {
   display: flex;
-  gap: 8px;
+  gap: 5px;
 }
 
 .tab {
   flex: 1;
-  padding: 12px 0;
+  min-width: 0;
+  padding: 12px 2px;
   border: none;
   border-radius: 10px 10px 0 0;
   background: rgba(255, 255, 255, 0.18);
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.82rem;
   font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
 }
 
